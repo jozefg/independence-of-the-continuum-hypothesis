@@ -1,0 +1,264 @@
+\section{The Cohen Topos}\label{sec:cohentopos}
+\subsection{The Partial Order \texorpdfstring{$P$}{P}}\label{subsec:partialorder}\hfill
+
+For the remainder of this development, we will work with the cohen
+topos. This is a subtopos of presheaves on a particular partial
+order. As mentioned above, we wish to design this partial order in
+order to help us construct a monomorphism from $B \to \Omega^N$. Now
+by transposition, such a morphism can always be represented as
+$B \times N \to \Omega$. This gives us an indication for how to
+construct $P$, it can simply be subsets of $B \times N$. Now in order
+a function $B \to \Omega^N$ (transposed as $B \times N \to \Omega$) to
+be a monomorphism, it must be that for any $p$ and any
+$b \neq b' \in B$ that there is some $n$ so that
+$p(b, n) \neq p(b', n)$.
+
+Therefore, our partial order $P$ shall be disjoint collections of
+$P = \powfin{B \times N \to \{0, 1\}}$. For any $p \in P$, we shall
+treat $p$ as a member of $B \times N \pto \{0, 1\}$ which is defined
+on only a finite number of inputs. Accordingly, we shall use
+$p(b, n) \downarrow$ and $p(b, n)\uparrow$ to indicate whether or not
+$p$ is or isn't defined on a particular input respectively. $P$ is
+called the collection of forcing conditions and each element is thus a
+condition. It should be thought of as a ``constraint'' on the map that
+we are trying to construct from $B \to \Omega^N$. If we are working at
+forcing condition $p$ we are in effect stating that while we do not
+know the full contents of the map $B \to \Omega^N$, we know that it is
+at least a completion of $p$.
+
+The finiteness of each set is crucial. It is used to imply that each
+completion \emph{could} be part of a monomorphism. This is because for
+any $b, b' \in \dom(p)$ for some $p \in P$, there exists an $n$ so
+that $p(b, n) \uparrow$ and $p(b', n) \uparrow$. Therefore, it is
+always the case that a future condition may add some data to
+distinguish $b$ and $b'$. It remains to define an order on $P$
+however. Let us say
+\[
+  q \le p \triangleq \forall (b, n) \in B \times N.
+  \ p(b, n) \downarrow \implies p(b, n) = q(b, n)
+\]
+This is the opposite of the traditional order that partial functions
+are endowed with and is clearly reflexive, antisymmetric, and
+transitive. This reversal is typical in forcing developments and may
+seem slightly confusing. The reason for it though is quite straight
+forward, each $p$ is thought of representing our knowledge about some
+map from $B \to \Omega^N$. The more defined $p$ is, the smaller it is
+according to our ordering, the fewer maps it corresponds to. The
+ordering is in effect the traditional subset ordering on the
+possibilities each condition allows. Hence, a larger condition has
+more information, it permits fewer possibilities and is therefore
+smaller.
+
+\subsection{Sheaves on \texorpdfstring{$P$}{P}}\label{subsec:presheaves}\hfill
+
+Let us now turn our attention to the Cohen Topos, or
+$\sheaves[\neg\neg]{P}$. We want to develop the framework necessary
+for us to construct our cardinal inequalities that we hinted at in the
+overview~\ref{sec:overview}. Before we can turn our attention to that
+though, we would like to establish that our topos is a boolean topos
+that satisfies the axiom of choice with a natural number object. Since
+$\sheaves[\neg\neg]{P}$ is a subtopos of $\presheaf{P}$, it inherits
+its NNO from $\presheaf{P}$. We know from
+lemma~\ref{lem:background:notnotboolean} that $\sheaves[\neg\neg]{P}$
+is boolean. In order to show that it satisfies the axiom of choice, we
+would like to apply
+lemma~\ref{lem:background:completealgebratoaoc}. In order to do this,
+we must show that for each $F \in \sheaves[\neg\neg]{P}$ that
+$\sub(F)$ is a complete boolean Heyting algebra, but this follows from
+the fact that $\sheaves[\neg\neg]{P}$ is a Grothendieck topos and
+lemma~\ref{lem:background:boolean}. This means all we must show is
+
+\begin{lem}
+  Subobjects of $1$ generate $\sheaves[\neg\neg]{P}$.
+\end{lem}
+\begin{proof}
+  In order to show this, we will show that $\sheafify(\yoneda(p))$
+  generates $P$ and that these sheaves are subobjects of one. First,
+  the latter. Since $\yoneda(p) \mono 1$ clearly holds in $\presheaf{P}$, it
+  suffices to note that, since $\sheafify$ is left exact
+  $\sheafify(a) = 1$ and it preserves monomorphisms. Therefore,
+  $\sheafify(\yoneda(p)) \mono \sheafify(1) = 1$ as required.
+
+  Now we must show that $\sheafify(\yoneda(p))$ generates. It suffices
+  to show that $\yoneda(p)$ generates $\presheaf{P}$. To see this,
+  suppose that $f \neq g : F \to G$ in $\sheaves[\neg\neg]{P}$. In
+  this case, we know that there is a $p$ and $t : \yoneda(p) \to F$ so
+  that $ft \neq gt$. Therefore, $\sheafify(ft) \neq \sheafify(gt)$ but
+  $\sheafify(ft) = f\sheafify(t) : \sheafify(\yoneda(p)) \to F$ and
+  likewise for $gt$. Now to see that $y(p)$ generates it suffices to
+  note that any presheaf is the colimit of representables. Therefore,
+  if $f \neq g : P_1 \to P_2$ then this implies that there are two
+  distinct cones on $P_2$ by the universality of a colimit. Therefore,
+  one of the legs of the cones is different. Simply factoring that leg
+  through $P_1$ gives our desired distinguishing map.
+\end{proof}
+
+
+Now that we have established that this topos is of the variety we
+need, let us investigate what sheaves are actually found in it. First
+we will demonstrate that the dense topology is
+\emph{subcanonical}. This means that all yoneda embeddings form
+sheaves, something that will prove useful later on.
+
+\begin{lem}\label{lem:cohentopos:subcanonical}
+  For any $p \in P$, $\yoneda(p)$ is a sheaf.
+\end{lem}
+\begin{proof}
+  In order to do this, we will directly use the definition of sieve on
+  Grothendieck topology. Suppose we have $S$, a covering sieve for the
+  dense topology on $q$. Furthermore, suppose we have a matching
+  family for $S$, $(x_f)_{f \in S}$. We now wish to find a unique
+  amalgamation $x \in \yoneda(p)(q)$. Since $P$ is a poset, it
+  suffices to show that such an amalgamation exists, as $y(p)(q)$
+  contains either one or zero elements. Now, since $x_d \in y(p)(d)$
+  for each $d \le q \in S$, we know that $d \le p$.
+
+  All we need to show then is that $q \le p$. Suppose not. Then there
+  must be a $(b, n)$ so that $q(b, n) \neq p(b, n)$ or that
+  $q(b, n) \uparrow$.  Let us define
+  $q' = q[(b, n) \mapsto \neg p(b, n)]$ so that it is clear that
+  $q'(b, n) \neq p(b, n)$. Then, since $S$ is a cover in the dense
+  topology and $q' \le q$ there must be a $d \le q'$ so that
+  $d \in S$. However, we then have $d \le p$ by assumption so
+  $d(b, n) = p(b, n)$, a contradiction. Therefore, it must be that
+  $q \le p$ holds.
+\end{proof}
+
+Having fleshed out a few basic sheaves, let us now begin to construct
+$\sheafify(\Delta B)$ and the monomorphism from it to
+$\Omega_{\neg\neg}^{\sheafify(\Delta N)}$. Here we use $\Delta X$ to
+indicate the constant presheaf $A \mapsto X$. First, we note that in
+order to construct a morphism
+\[
+  g : \sheafify(\Delta B) \times \sheafify(\Delta N) \to \Omega_{\neg\neg}
+\]
+In order to construct this, we will look to construct a similar
+morphism in $\presheaf{P}$. Let us define a subobject of
+$A \mono \Delta B \times \Delta N$. First we note that
+$\Delta B \times \Delta N = \Delta (B \times N)$. Therefore, we can
+define $A$ as
+\[
+  A(p) = \{(b, n) \mid p(b, n) = 1\}
+\]
+This subobject is designed to pick out the graph of the function we
+have currently available to us. It, crucially, will vary as we move
+from condition to condition allowing $A$ to better and better
+approximate our hypothetical monomorphism. Moreover, $A$ happens to be
+a closed object of $\Delta B \times \Delta N$.
+
+\begin{lem}\label{lem:cohentopos:Aclosed}
+  $A$ is a closed subobject of $\Delta B \times \Delta N$ under
+  $\neg\neg$.
+\end{lem}
+\begin{proof}
+  It suffices to show that $\neg\neg A \le A$ as the reverse holds for
+  any subobject. Suppose that $(b, n) \in (\neg\neg A)(p)$. This
+  indicates that for all $q \le p$ there is an $r \le q$ for which we
+  have $(b, n) \in A(r)$ which is to say, $r(b, n) = 1$. This in
+  particular implies that $r(b, n) = 1$.
+
+  Now if $(b, n) \not\in A(p)$. This implies that either $p(b, n) = 0$
+  or that $p(b, n) \uparrow$. If the former is the case then we have
+  an immediate contradiction: $r \le p$ so $p(b, n) = r(b, n)$ must
+  hold. If the latter, then we have $p' = p[(b, n) \mapsto 0] \le p$
+  and for all $r \le p'$, we know that $(b, n) \not\in A(r)$. This
+  contradicts the assumption that $(b, n) \in (\neg\neg A)(p)$ so
+  we're done.
+\end{proof}
+
+Having established that $A$ is a closed subobject, we know that
+$\charmap(A) : \Delta B \times \Delta N \to \Omega$ must factor
+through $\Omega_{\neg\neg} \mono \Omega$ by lemma~\ref{lem:background:closedfactors}.
+Now this means we have the following diagram
+\[
+  \begin{tikzcd}
+    {\Delta N \times \Delta B} \ar[rr, "\charmap(A)"]
+    \ar[dr, "f", swap, dashed] & & \Omega\\
+    & \Omega_{\neg\neg} \ar[ur, rightarrowtail]
+  \end{tikzcd}
+\]
+Now we're going to show that this map
+$g = \Lambda f : \Delta B \to \Omega_{\neg\neg}^{\Delta N}$ is
+actually the desired monomorphism.
+\begin{lem}
+  $g$ is a monomorphism in $\presheaf{P}$.
+\end{lem}
+\begin{proof}
+  It suffices to show that this is a monomorphism in $\cat{Set}$ for
+  all $p \in P$. Now unfolding definitions, we know that
+  \[
+    g_p : B \to (\Delta N \times \yoneda(p) \to \Omega_{\neg\neg})
+  \]
+  Moreover, if we apply $g_p$ to $b \in B$ and
+  $(n, \star) : \Delta(N)(q) \times \yoneda(p)(q)$ we get
+  \[
+    (g_p(b))_q(n, \star) = \{r \mid r \le q \wedge r(b, n) = 1\}
+  \]
+  Suppose that $b \neq c \in B$, we wish to show that there is an $n$
+  so that
+  \[
+    (g_p(b))_q(n, \star) \neq (g_p(c))_q(n, \star)
+  \]
+  However, since $q$ is finite, there is an $n$ so that
+  $q(b, n_0) \uparrow$ and $q(c, n_0) \uparrow$. We then consider
+  $(g_p(b))_q(n_0, \star)$ and $(g_p(c))_q(n_0, \star)$. Since
+  $q(b, n_0) \uparrow$, $(g_p(b))_q(n_0, \star)$ must contain $q'$
+  where $q' = q[(b, n_0 \mapsto 1)]$. However, since $q'(c, n_0)
+  \uparrow$ it cannot be that $q' \in (g_p(c))_q(n_0, \star)$ so these
+  are distinct as required. Therefore, $g$ is a mono.
+\end{proof}
+
+\begin{cor}
+  $m = \sheafify(g)$ is a monomorphism in $\sheaves[\neg\neg]{P}$ from
+  $\sheafify(\Delta B) \to \Omega_{\neg\neg}^{\sheafify(\Delta N)}$.
+\end{cor}
+\begin{proof}
+  Since $\sheafify$ is left exact, we immediately have that $m$ is a
+  mono. It remains to show that
+  \[
+    \sheafify(\Omega_{\neg\neg}^{\Delta N}) \cong
+    \Omega_{\neg\neg}^{\sheafify(\Delta N)}
+  \]
+  This follows because
+  \begin{align*}
+    \hom(X, \Omega_{\neg\neg}^{\Delta N}) &=
+        \hom(\Delta N \times X, \Omega_{\neg\neg})\\
+     &= \hom(\sheafify(\Delta N \times X), \Omega_{\neg\neg})\\
+     &= \hom(\sheafify(\Delta N) \times \sheafify(X), \Omega_{\neg\neg})\\
+     &= \hom(\sheafify(X), \Omega_{\neg\neg}^{\sheafify(\Delta N) })\\
+     &= \hom(X, \Omega_{\neg\neg}^{\sheafify(\Delta N) })\\
+  \end{align*}
+  so this follows immediately from yoneda. Above we have made use of
+  the fact that
+  \[
+    \hom(X, Y) = \hom(\sheafify(X), Y)
+  \]
+  when $Y$ is a sheaf, an immediate result of the fact that sheaves
+  form a reflective subcategory with $\sheafify$.
+\end{proof}
+
+Now let us stop and take stock. At this point, we have the
+\[
+  \begin{tikzcd}
+    \sheafify(\Delta N) \ar[r, rightarrowtail, "\sheafify(\Delta(\iota))"] &
+    \sheafify(\Delta B)  \ar[r, rightarrowtail, "m"] &
+    \Omega_{\neg\neg}^{\sheafify(\Delta B)}
+  \end{tikzcd}
+\]
+So we've completed the task of ``forcing''
+$\Omega_{\neg\neg}^{\sheafify(\Delta N)}$ to become quite large. In
+fact we can insert $\sheafify(\Delta \Omega^N)$ into the above diagram
+just using the monomorphism we have present in $\presheaf{P}$. Let us
+factor $\iota : N \to B$ as $\iota_1 : N \to 2^N$ and
+$\iota_2 : 2^N \to B$. Then,
+\[
+  \begin{tikzcd}
+    \sheafify(\Delta N) \ar[r, rightarrowtail, "\sheafify(\Delta(\iota_1))"] &
+    \sheafify(\Delta 2^N) \ar[r, rightarrowtail, "\sheafify(\Delta(\iota_2))"] &
+    \sheafify(\Delta B) \ar[r, rightarrowtail, "m"] &
+    \Omega_{\neg\neg}^{\sheafify(\Delta B)}
+  \end{tikzcd}
+\]
+What remains then is to prove that no new epimorphisms have been
+introduced in this new topos and that all these first two inclusions
+are still strict.

@@ -1,0 +1,76 @@
+\documentclass[12pt]{amsart}
+\usepackage{amsmath, amssymb, amsopn, stmaryrd, amsthm}
+\usepackage{microtype, eulervm, tgpagella}
+\usepackage{tikz-cd}
+\usepackage{fullpage}
+\usepackage[numbers]{natbib}
+\usepackage[hyperfootnotes=false]{hyperref} % Who the hell wants hyperlinked footnotes
+\usepackage{parskip}
+
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\pto}[1]{\rightharpoonup}
+\newcommand{\den}[1]{\llbracket #1 \rrbracket}
+\newcommand{\cat}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\sheaves}[2][]{\ensuremath{\mathbf{Sh}_{#1}(#2)}}
+\newcommand{\presheaf}[1]{\ensuremath{\widehat{#1}}}
+\newcommand{\Ccat}{\ensuremath{\mathbb{C}}}
+\newcommand{\Dcat}{\ensuremath{\mathbb{D}}}
+\newcommand{\Etop}{\ensuremath{\mathcal{E}}}
+\newcommand{\Ftop}{\ensuremath{\mathcal{F}}}
+\newcommand{\sheafify}{\ensuremath{\mathbf{a}}}
+\newcommand{\yoneda}{\ensuremath{\mathbf{y}}}
+\newcommand{\pow}[1]{\ensuremath{\mathcal{P}\left(#1\right)}}
+\newcommand{\powfin}[1]{\ensuremath{\mathcal{P}_{fin}\left(#1\right)}}
+
+\newcommand{\epi}{\ensuremath{\twoheadrightarrow}}
+\newcommand{\mono}{\ensuremath{\rightarrowtail}}
+\newcommand{\im}[1]{\ensuremath{\mathrm{Im}(#1)}}
+\DeclareMathOperator{\charmap}{char}
+\DeclareMathOperator{\true}{true}
+\DeclareMathOperator{\sub}{Sub}
+\DeclareMathOperator{\dom}{Dom}
+\DeclareMathOperator{\cod}{Cod}
+\DeclareMathOperator{\epis}{Epi}
+\DeclareMathOperator{\into}{in}
+\DeclareMathOperator{\inl}{inl}
+\DeclareMathOperator{\inr}{inr}
+
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem{example}[thm]{Example}
+\newtheorem{defn}[thm]{Definition}
+
+\title{On the Independence of the Continuum Hypothesis}
+\author{Daniel Gratzer}
+\date{\today}
+
+\begin{document}
+\begin{abstract}
+  In these notes we present a short, mostly self-contained
+  presentation of the independence of the continuum hypothesis. The
+  proof is topos-theoretic: we shall be presenting a specific topos
+  which can model ZFC for which the continuum hypothesis fails. This
+  demonstrates the connection between the logical methods of forcing,
+  Beth semantics and Grothendieck toposes. This development closely
+  follows that given in~\citet{MacLane:92}, a simplification of the
+  original proof given in~\citet{Cohen:63}. With these notes I hope to
+  illustrate the elegant topos theoretic approach to forcing results
+  that has become increasingly common in logic, type theory, and
+  mathematics at large. The concluding section~\ref{sec:conclusion}
+  contains a number of interesting and related developments for the
+  curious reader.
+\end{abstract}
+\maketitle
+
+\input{background}
+\input{overview}
+\input{cohen-topos}
+\input{strictness}
+\input{conclusion}
+
+\bibliographystyle{plainnat}
+\bibliography{sheaves-and-forcing}{}
+\end{document}

@@ -1,0 +1,45 @@
+\section{An Overview of the Proof}\label{sec:overview}
+Before we dive into the details of this proof, I think it is helpful
+to step back and summarize it at a high level. The proof using a
+method called forcing\footnote{Forcing was in fact developed to solve
+  this problem}. The basic premise of the proof is that we want to
+construct a model of ZFC which forces a set much larger than $2^{N}$,
+$B$, to have an injection into $2^{N}$ in the topos
+$\sheaves[\neg\neg]{P}$ for some poset $P$. It doesn't particularly
+matter what $B$ is so long as it's strictly larger than $2^N$. For
+simplicity, let us fix
+\[
+  B = \pow{\pow{N}}
+\]
+for the remainder of the paper. Since this cannot be done ordinarily
+we use forcing to gradually introduce fragments of such an injection
+so that, internally to the topos, we may manipulate this arrow as if
+it were a complete injection. The ``fragments'' of the function will
+constitute the poset $P$ that we're defining sheaves over. This is the
+essence of topos-theoretic forcing. This topos is developed in
+section~\ref{sec:cohentopos}.
+
+Now in our model, we then have
+$\sheafify(\Delta N) \mono \sheafify(\Delta B) \mono \Omega_{\neg\neg}^N$.
+Having done this, we can actually force an object to appear strictly
+between $N$ and $\Omega_{\neg\neg}^N$. This object however isn't
+$\sheafify(\Delta B)$!  Instead, we use $\sheafify(\Delta(2^N))$, the
+powerset of the NNO from the presheaf topos included into
+$\sheaves[\neg\neg]{P}$. Since $B$ was specifically chosen to be much
+larger than $2^N$, we get an inclusion
+\[
+  \sheafify(N) \mono \sheafify(\Delta 2^N) \mono \sheafify(B) \mono \Omega_{\neg\neg}^N
+\]
+All of these inequalities are developed in
+section~\ref{sec:cohentopos}. Moreover, those first two
+inclusions are strict in $\presheaf{P}$. We then prove that posets
+like $P$ satisfy what is called the Souslin property and that in this
+case $\sheafify(-)$ preserves the strictness of inclusions. This is
+the most technical portion of the proof and is developed
+in~\ref{sec:strictness}.
+
+Having done this, by transitivity we have then forced the existence of
+an object $\sheafify(2^N)$ which lies between $N$ and $\pow{N}$ as
+required. Now the astute reader might object that we have not actually
+provided a model of ZFC. This is largely the construction for a model
+of ZFC is easily found in~\citet{Fourman:80}.

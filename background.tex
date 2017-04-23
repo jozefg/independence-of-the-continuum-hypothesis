@@ -1,0 +1,411 @@
+\section{Background}\label{sec:background}
+
+These notes are not meant to serve as a complete introduction to topos
+theory. Therefore, the background section of these notes, rather than
+being the first 5 chapters of~\citet{MacLane:92}
+or~\citet{Johnstone:14} will contain more or less an accumulation of
+definitions and lemmas that we will need. These will be more useful
+for ensuring that I have things to reference than for the reader to
+learn. It also comes with the moderate advantage that I get to inflict
+the my peculiarities upon you dear reader.
+
+Since this is a topos theoretic proof, it would behoove us to start
+with
+\begin{defn}\label{defn:background:topos}
+  An elementary topos $\Etop{}$ is a category that
+  \begin{itemize}
+  \item has all finite limits
+  \item is cartesian closed
+  \item has a subobject classifier
+  \end{itemize}
+\end{defn}
+The topos that we are interested in will be ones that satisfy certain
+characteristics making them into a model of ZFC. Modeling the axiom of
+choice, the law of the excluded middle, and the existence of infinite
+sets in particular present challenges. The next set of definitions are
+the categorical analogs of these traits.
+\begin{defn}\label{defn:background:nno}
+  A natural number object (NNO) is a category $N \in \Ccat$ is an object
+  with arrows $s : N \to N$ and $z : 1 \to N$ so that for any object
+  $A \in \Ccat$ with $f : 1 \to A$ and $g : A \to A$, there exists a
+  unique $h$ so that
+  \[
+    \begin{tikzcd}
+      1 \ar[r, "z"] \ar[dr, swap, "f"] & N \ar[d, dashed, "h"] \ar[r, "s"]& N \ar[d, dashed, "h"]\\
+      & A \ar[r, "g"]& A
+    \end{tikzcd}
+  \]
+\end{defn}
+
+\begin{example}
+  In the category of sets, $\cat{Set}$, the set of all natural numbers
+  $\mathbb{N}$ forms a natural number object.
+\end{example}
+
+\begin{example}
+  In any presheaf $\presheaf{\Ccat}$, the constant presheaf $A \mapsto
+  \mathbb{N}$ forms a natural number object.
+\end{example}
+
+\begin{example}
+  NNOs are reflected by geometric morphism. In particular, any
+  reflective subtopos inherits an NNO from the full topos.
+\end{example}
+
+Having categorified the definition of the set of natural numbers, we
+now turn to the logical aspects of a topos. The internal logic of a
+topos is, in general, intuitionistic and thus validates neither the
+law of the excluded middle nor the axiom of choice. We shall need both
+of these for the topos we're constructing. Therefore, we turn to
+defining what toposes \emph{do} satisfy these principles.
+
+\begin{defn}\label{defn:background:boolean}
+  A topos is said to be boolean if the subobject classifier $\Omega$
+  forms an internal boolean algebra.
+\end{defn}
+
+Booleaness can be captured in several equivalent in useful ways.
+
+\begin{lem}\label{lem:background:boolean}
+  The following conditions are equivalent
+  \begin{enumerate}
+  \item $\Etop$ is boolean
+  \item $\neg\neg = 1 : \Omega \to \Omega$
+  \item The Heyting algebra $\sub(A)$ for an $A \in \Etop$ is a
+    boolean algebra
+  \item $\Omega \cong 1 + 1$ with $[\true, \neg \circ \true]$.
+  \end{enumerate}
+\end{lem}
+\begin{proof}\hfill
+  \begin{itemize}
+  \item $1 \iff 2$\\
+    The condition that $\neg\neg a = a$ for all $a$ is equivalent to
+    being boolean for any boolean algebra. $a \le \neg \neg a$ in any
+    Heyting algebra, therefore all we need to show is that
+    $\neg \neg a \le a$. Since $1 \le a \vee \neg a$, it suffices to
+    show that $\neg \neg a \wedge (a \vee \neg a) \le a$. Since all
+    Heyting algebras are distributive,
+    \begin{align*}
+      \neg \neg a \wedge (a \vee \neg a) &\le a \Leftrightarrow \\
+      (\neg \neg a \wedge a) \vee (\neg \neg a \wedge \neg a) &\le a \Leftrightarrow \\
+      a \vee \bot &\le a \Leftrightarrow \\
+      a &\le a
+    \end{align*}
+    For the other direction, it then suffices to show that
+    $1 \le \neg \neg (a \vee \neg a)$
+    \begin{align*}
+      1 &\le \neg \neg (a \vee \neg a) \Leftrightarrow\\
+      \neg (a \vee \neg a) &\le 0 \Leftrightarrow\\
+      \neg a \wedge \neg \neg a &\le 0 \Leftrightarrow\\
+      0 &\le 0 \Leftrightarrow
+    \end{align*}
+    so we're done.
+  \item $1 \iff 3$\\
+    We know that the Heyting algebra $\sub(A)$ for any $A \in \Etop$
+    corresponds naturally to $\hom(A, \Omega)$. This is a boolean
+    algebra precisely when $\Omega$ forms one internally. For the
+    reverse direction, if we have $\neg\neg = 1$ in every subobject
+    preorder, $\sub(A)$, naturally in $A$, then by Yoneda this holds
+    internally to $\Omega$.
+  \item $1 \iff 4$\\
+    For this, let us first show that $4 \implies 1$. If
+    $i = [true, \neg \circ true] : 1 + 1 \cong \Omega$, then it is clear
+    that
+    \[
+      \begin{tikzcd}
+        1 + 1 \ar[r, "i"] \ar[d, "tw"] & \Omega \ar[d, "\neg"] \\
+        1 + 1 \ar[r, "i"] & \Omega
+      \end{tikzcd}
+    \]
+    commutes where $tw : 1 + 1 \to 1 + 1$ is the canonical twisting
+    map. It satisfies the properties that $tw \circ \inl = \inr$ and
+    vice versa. Now this means that $i \circ tw \circ i^{-1} = \neg$
+    but then
+    \[
+      \neg\neg = i \circ tw \circ i^{-1} \circ i \circ tw \circ i^{-1} =
+      i \circ tw \circ tw \circ i^{-1} = id
+    \]
+    so we indeed have that $\Omega$ is an internal boolean
+    algebra. Next, we must show that $1 \implies 4$. We know that
+    $\true \wedge \neg \true = 0$ so
+    $\true \vee \neg \true = \true + \neg \true$ as subobjects of
+    $\Omega$. Let us call $m = \true \vee \neg \true$, then
+    pictorially, we have that
+    \[
+      \begin{tikzcd}
+        1 + 1 \ar[ddrr, dashed, swap, "m"] & &
+        1 \ar[dd, "\true"] \ar[ll]\\
+        &&\\
+        1 \ar[rr, "\neg \true"] \ar[uu] & & \Omega\\
+      \end{tikzcd}
+    \]
+    However, we know that since $\Omega$ is boolean,
+    $a \vee \neg a = 1$. Therefore, $\true \vee \neg \true = id$. This
+    tells us that $1 + 1 \cong \Omega$ as required.
+  \end{itemize}
+\end{proof}
+
+For our purposes of using a topos to model ZFC, booleaness will be
+essential. A boolean topos will validate the law of excluded
+middle\footnote{Exercise, show that in a boolean topos
+  $\den{\forall x.\ x \vee \neg x}$ holds} which is crucial for
+validating the rules of ZFC. There then arises the natural question of
+taking an existing topos and modifying it so that it is boolean. This
+is easily done using a Lawvere-Tierney topology
+
+\begin{defn}\label{defn:background:lawveretierney}
+  A Lawvere-Tierney Topology is a map $j : \Omega \to \Omega$ so that
+  \begin{enumerate}
+  \item $j \circ \true = \true$
+  \item $j \circ j = j$
+  \item $\wedge \circ (j, j) = j \circ \wedge$
+  \end{enumerate}
+\end{defn}
+While the subject of Lawvere-Tierney topologies on an elementary topos
+is a rich one, but we shall limit ourselves to the essentials for our
+purposes here. It will be important to know that given a
+Lawvere-Tierney topology we can internally define a notion of
+``sheaf'' which matches up to that of a sheaf Grothendieck
+topology. In order to do this, first we define
+\begin{defn}\label{defn:background:closure}
+  For a topology $j$ on $\Etop$, the closure of $A \mono B$ is the
+  subobject of $B$ classified by $j \circ \charmap(A)$, $\bar{A}$. A
+  subobject is said to be closed if $\bar{A} = A$.
+\end{defn}
+
+We can define an alternative subobject classifier which internalizes
+a Lawvere-Tierney topology as
+\[
+  \begin{tikzcd}
+    \Omega_j \ar[r, dashed] &
+    \Omega \ar[r, shift left=0.5em, "id"]
+    \ar[r, shift right=0.3em, swap, "j"] &
+    \Omega
+  \end{tikzcd}
+\]
+This has the nice property that it classifies closed subobjects.
+\begin{lem}\label{lem:background:closedfactors}
+  If $A \mono B$ is a closed subobject under $j$, then $\charmap(A)$
+  factors through $\Omega_j$.
+\end{lem}
+\begin{proof}
+  Suppose that $A$ is a closed subobject, then we know that
+  $\charmap(A) \circ j = \charmap(A)$ by definition. Therefore,
+  \[
+    \begin{tikzcd}
+      A \ar[d, dashed] \ar[dr, "\charmap(A)"] & &\\
+      \Omega_j \ar[r]&
+      \Omega \ar[r, shift left=0.3em, "id"] \ar[r, shift right = 0.3em, swap, "j"] & \Omega
+    \end{tikzcd}
+  \]
+  by the universal property of an equalizer.
+\end{proof}
+
+\begin{defn}\label{defn:background:dense}
+  A subobject $A \mono B$ is said to be dense if $\bar{A} \cong B$
+\end{defn}
+
+We are now in a position to define the internalization of sheaves. The
+inspiration for this definition comes from the fact that in a
+Grothendieck topology, a sieve is a dense subfunctor of
+$\yoneda(C)$. We therefore can define sheaves purely in terms of dense
+subobjects.
+
+\begin{defn}\label{defn:background:sheaves}
+  An object $F \in \Etop$ is said to be a sheaf if for every dense
+  subobject $A \mono B$, a morphism $f : A \to F$ has a unique
+  extension $g : B \to F$.
+  \[
+    \begin{tikzcd}
+      A \ar[d, rightarrowtail, swap, "m"] \ar[r, "f"] & F\\
+      B \ar[ur, dashed, swap, "g"]
+    \end{tikzcd}
+  \]
+\end{defn}
+
+Sheaves enjoy several nice properties with regards to closure which
+will be useful for establishing some facts later on.
+\begin{lem}\label{lem:background:sheavesclosed}
+  For any $A \mono B$ if $A$ is a sheaf then $A$ is closed.
+\end{lem}
+\begin{proof}
+  We know that by definition that the mono $m : A \mono \bar{A}$ is
+  dense and since $A$ is a sheaf we must have
+  \[
+    \begin{tikzcd}
+      A \ar[d, rightarrowtail, "m"] \ar[r, equals] & A\\
+      B \ar[ur, dashed]
+    \end{tikzcd}
+  \]
+  so in particular $m$ must be an isomorphism.
+\end{proof}
+
+Finally, while the proof is too far out of scope for these notes, it
+is important to note that sheaves on a topology $j$ form a full
+subcategory of a topos, $\Etop$. This category, denoted
+$\sheaves[j]{\Etop}$, is in fact a reflective subcategory with
+\[
+  \begin{tikzcd}
+    \sheaves[j]{\Etop} \ar[rr, bend left, "\iota"] & \top &
+    \makebox[0pt]{\phantom{\textbf{Sh}}$\Etop$}\phantom{\sheaves[j]{\Etop}}
+    \ar[ll, bend left, "\sheafify"]
+  \end{tikzcd}
+\]
+The curious reader is referred to either~\citet{MacLane:92}
+or~\citet{Johnstone:14}. Jon Sterling as gave a talk on this and ought
+to distribute his notes. Please go bother him if you really want a
+proof. Now in our case, we shall be interested in one particular
+topology, the double negation topology.
+\begin{example}\label{ex:background:doublenegation}
+  For any topos, $\neg\neg : \Omega \to \Omega$ forms a topology.
+\end{example}
+The useful property of the double-negation topology for our purposes
+is that $\sheaves[\neg\neg]{\Etop}$ will always form a boolean
+subtopos of $\Etop$. Later on, we will use this to construct a boolean
+topos out of a topos modeling the forcing construction we wish to
+implement.
+
+\begin{lem}\label{lem:background:notnotboolean}
+  $\sheaves[\neg\neg]{\Etop}$ is boolean.
+\end{lem}
+\begin{proof}
+  By~\ref{lem:background:boolean} it suffices to show that for each
+  sheaf $A$ that $\sub(A)$ is a boolean lattice. If $B \mono A$ is a
+  subobject of $A$, it must be that $B$ closed as it too must be a
+  sheaf by~\ref{lem:background:sheavesclosed}. But closure in under
+  $\neg\neg$ means precisely that $\neg \neg B = B$ so $\sub(A)$ is
+  boolean as required.
+\end{proof}
+
+An interesting aside at this point is that the double-negation
+topology on a presheaf topos has a well known Grothendieck analog: the
+dense topology. That is, the topology given by
+\[
+  J(C) = \{ S \mid \forall f : A \to C.\ \exists h.\ f \circ h \in S\}
+\]
+I will not prove this but will use the phrase ``dense topology'' and
+``double negation topology'' interchangeably in the
+notes\footnote{It's because I'm a mean-spirited person}.
+
+We next turn to the topos-theoretic analog of the axiom of
+choice. Here we are presented with two possible ways. The first is a
+direct formulation of the principle from the category of sets. We wish
+to generalize \emph{every surjection has a section}. We can generalize
+this to a topos by replacing surjection with epimorphism to get
+
+\begin{defn}\label{defn:background:aoc}
+  A topos satisfies the axiom of choice if every $e : A \epi B$ has a
+  section $s : B \to A$ so that $es = 1$
+\end{defn}
+
+However, it is often preferable to state a version termed the internal
+axiom of choice but the differences are out of scope for these
+notes. I will settle for merely stating it.
+
+\begin{defn}\label{defn:background:iaoc}
+  A topos satisfies the internal axiom of choice if $(-)^A$ preserves
+  epimorphisms.
+\end{defn}
+
+\begin{remark}
+  Any topos that satisfies the axiom of choice satisfies the internal
+  version. Any topos that satisfies the internal version is
+  boolean. This is due to~\citet{Diaconescu:75}.
+\end{remark}
+
+This characterization of the axiom of choice is awkward to work with
+however in many toposes. A cleaner characterization can be given in
+terms of the what objects \emph{generate} the topos.
+
+\begin{defn}\label{defn:background:generate}
+  A collection of objects $S$ is said to generate a category $\Ccat$
+  if for any parallel arrows $f \neq g : A \to B$, there exists an
+  arrow $h : C \to A$ for some $C \in S$ so that
+  $fh \neq gh : C \to B$. In particular, if a topos is generated by
+  $1$ and is nontrivial then it is \emph{well-pointed}.
+\end{defn}
+
+Generation by a collection of objects captures a large number of
+logical principles that we will need for our topos. Most important
+among these is that for a Grothendieck topos generated by subobjects
+of 1, we may automatically derive the validity of the axiom of
+choice. This is because in a Grothendieck topos the subobject
+preorders are all \emph{complete} partial orders. We demonstrate this
+in the next lemma.
+
+\begin{lem}\label{lem:background:completealgebratoaoc}
+  If a boolean topos $\Etop{}$, is generated by subobjects of $1$ and
+  has complete boolean algebras for subobject posets then $\Etop{}$
+  satisfies the axiom of choice.
+\end{lem}
+\begin{proof}
+  We wish to show that $e : A \epi B$ has a section $B \to A$. We then
+  wish to use Zorn's lemma to find a maximal subobject $m : M \mono B$
+  so that $e$ has a section $s : M \to A$. That is, so that $es = m$.
+  In order to apply Zorn's lemma we wish to show that the subset of
+  $\sub(B)$ is closed under chains. First we note that any such
+  section is necessarily mono. This is because if $sf = sg$, then we
+  must have $esf = esg$ so $mf = mg$ so $f = g$ as $m$ is mono. Now
+  let us show the chain condition.
+
+  Suppose that $(M_i)_i \subseteq \sub(B)$ so that for each $M_i$, we
+  have a section $s_i$ and this forms a chain. Now we note that each
+  $M_i$ is a subobject of $B \times A$ under
+  $\langle m_i, s_i \rangle$. Since we assumed that $\Etop{}$ had
+  complete boolean algebras for subobject lattices, let us take
+  $M = \bigvee_i M_i$ taken as subobjects of $B \times A$. Now this
+  tells us that $M \mono B \times A$ so we must have $m : M \to B$ and
+  $s : M \to A$. We must show that $e \circ s = m$ now.
+
+  Let us note that $A$ is a subobject of $B \times A$ under
+  $\langle e, id \rangle$. Furthermore, by $s$ we have that
+  $M_i \le A$ for all $i$. Therefore, by the definition of a least
+  upper bound, we must have $M \le A$. Therefore, we have a mono so
+  that
+  \[
+    \begin{tikzcd}
+      M \ar[rr, rightarrowtail, "s'"] \ar[dr, swap, rightarrowtail, "{\langle m, s \rangle}"] &&
+      A \ar[dl, rightarrowtail, "{\langle e, id \rangle}"]\\
+      &B \times A&
+    \end{tikzcd}
+  \]
+  this tells us that $s' = s$ so we have our desired section.
+
+  Now suppose we have such a maximal subobject $m : M \mono B$ with a
+  section $s : M \to A$. Let suppose that $M \neq A$, for it is then
+  we're done. We note that $M$ must have a nonzero complement as it is
+  not $B$. Since $\neg M$ is nonzero, it has two different subobjects
+  of its own, $0$ and $1$. Thus $\neg M$ has two different
+  characteristic maps and since subobjects of 1 generate, for some
+  $U \mono 1$ we must have $t : U \to \neg M$. Consider
+  \[
+    \begin{tikzcd}
+      A' \ar[d, "e'", twoheadrightarrow] \ar[rr] & & A \ar[d, twoheadrightarrow, "e"]\\
+      V \ar[r, rightarrowtail, "t"] & \neg M \ar[r, rightarrowtail] & B
+    \end{tikzcd}
+  \]
+  Next, we note that $V \neq 0$ because it has an arrow to a nonzero
+  object. From this, it follows that $A'$ must not be 0 as $A' \epi V$
+  and
+  $\begin{tikzcd}
+    V \ar[r, "f", shift left=0.2em] \ar[r, "g", swap, shift right=0.2em] & \Omega
+  \end{tikzcd}$
+  for some $f \neq g$. If $A'$ was zero then it must be that $fe = ge$
+  which would give us $f = g$, a contradiction.
+
+  Now since $A'$ is nonzero, we can once again get a subterminal
+  object which maps into it, $W \mono 1$ with $w : W \to A'$. Now we
+  immediately have $e'w : W \to V$ so it follows that $W \mono V$. Now
+  we take the image factorization of $\Im(te'w) = e'' : W \to t(W)$.
+  Now since $W \mono 1$, it must be that $e''$ is also mono and since
+  $\Etop$ is balanced, we then have that $e''$ is an iso. Now as
+  $t(W) \mono \neg M$, it must be that $t(W) \wedge M = 0$ so
+  $t(W) \vee M = t(W) + M$. Moreover, $we''^{-1} : t(W) \to A'$ so we
+  know that $t(W) \to A$ so we can form a section $M + t(W) \to A$.
+  This contradicts the maximality of $M$.
+\end{proof}
+
+With this we are in a position to start our proof because a topos
+which satisfies the AoC and has a NNO is powerful enough to provide a
+model of ZFC that we will use to validate the independence of the
+continuum hypothesis.
