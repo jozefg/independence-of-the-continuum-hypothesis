@@ -12,14 +12,14 @@ First we show that this actually corresponds to the epimorphisms from
 $X$ to $Y$.
 
 \begin{lem}\label{lem:strictness:epis}
-  $(\pi_1, e) : P \times X \epi P \times Y$ if and only if
+  $\langle \pi_1, e \rangle : P \times X \epi P \times Y$ if and only if
   $\Lambda e : P \to Y^X$ factors through $\epis(X, Y)$.
 \end{lem}
 \begin{proof}
-  It suffices to show that $P \Vdash \forall x.\ exists y.\ f(x) = y$
-  if and only if $f$ is epi. Now by the Kripke-Joyal semantics,
-  $P \Vdash \forall x.\ exists y.\ f(x) = y$ if and only if for all
-  $V$,
+  It suffices to show that $P \Vdash \forall x.\ \exists y.\ f(x) = y$
+  if and only if $\hat{f} : P \times X \to Y$ is epi. Now by the
+  Kripke-Joyal semantics, $P \Vdash \forall x.\ \exists y.\ f(x) = y$
+  if and only if for all $V$,
   \[
     P \times V \Vdash \exists y.\ (f\pi_1)(x) = \pi_2
   \]
@@ -37,8 +37,8 @@ $X$ to $Y$.
     \hat{f} \circ \langle \pi_1 p, b \rangle
   \]
   here $\hat{f}$ is just the transpose of $f$. Finally, this gives us that
-  $p = \langle \hat{f}, 1 \rangle \circ \langle \pi_1 p, \beta \rangle$.
-  This tell us that $\langle \hat{f}, 1 \rangle$ is epi and this is
+  $p = \langle \pi_1, \hat{f} \rangle \circ \langle \pi_1 p, b \rangle$.
+  This tell us that $\langle \pi_1, \hat{f} \rangle$ is epi and this is
   true if and only if $\hat{f}$ is epi as required.
 \end{proof}
 
@@ -51,9 +51,9 @@ existence of epimormorphisms we can define strict inequality.
 
 Having internalized this, we are at least now in a position to state
 the theorem that we want to prove:
-$X < Y \implies \sheafify(X) < \sheafify(Y)$. This property will rely
-crucially on the structure of $P$. In particular we shall show that
-$P$ has the Souslin property.
+$X < Y \implies \sheafify(\Delta X) < \sheafify(\Delta Y)$. This
+property will rely crucially on the structure of $P$. In particular we
+shall show that $P$ has the Souslin property.
 
 \begin{defn}\label{defn:strictness:souslin}
   A partial order $Q$ satisfies the Souslin property if any set of
