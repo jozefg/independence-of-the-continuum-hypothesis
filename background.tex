@@ -369,7 +369,73 @@ in the next lemma.
       &B \times A&
     \end{tikzcd}
   \]
-  this tells us that $s' = s$ so we have our desired section.
+  this tells us that $s' = s$ so we have our desired section. Now we
+  want to conclude that $m : M \to B$ is indeed a mono, however, all
+  we know is that $\langle m, s \rangle$ is a mono. Therefore, we want
+  to show that
+  \[
+    (x, x', y \mid m(x) = y \wedge m(x') = y \vdash x = x')
+  \]
+  in the internal logic. Since $m' = \langle m, s \rangle$ is a mono,
+  we know that
+  \[
+    (x, x', z : B \times A \mid m'(x) = z \wedge m(x') = z \vdash x = x')
+  \]
+  Therefore, if we can show that
+  \[
+    (a, a', b \times M(b, a), M(b, a') \vdash a = a')
+  \]
+  then we could rewrite the assumption that $m'$ is mono to
+  \[
+    (x, x', b : B \mid \pi_1(m'(x)) = b \wedge \pi_1(m(x')) = b \vdash x = x')
+  \]
+  and since $m = \pi_1 \circ m'$ by definition, this gives us our
+  desired result. We know that since each $m_i$ is mono, that if
+  \[
+    (x, x', b \mid m_i(x) = b \wedge m_i(x') = b \vdash x = x')
+  \]
+  Furthermore, this tells us that if
+  \[
+    (x, x', b, a, a' \mid (\langle m_i, s_1 \rangle)(x) = (b, a) \wedge
+    (\langle m_i, s_1 \rangle)(x') = (b, a') \vdash x = x')
+  \]
+  so by functionality, since we have
+  $f(x) = (b, a) \wedge f(x) = (b, a')$ we must have $a = a'$ as
+  well. We know that for all $i$.
+  \[
+    (a, a', b \times M_i(b, a), M_i(b, a') \vdash a = a')
+  \]
+  Now, stepping outside the internal logic, we wish to show that
+  \[
+    \begin{tikzcd}
+      {\pi_{12}^*(M) \wedge \pi_{13}^*(M)} \ar[dr] \ar[rr, rightarrowtail] & &
+      {B \times A} \ar[ld, "{1 \times \delta}"]\\
+      &{B \times A \times A}&
+    \end{tikzcd}
+  \]
+  Let us now work with $\sub(B \times A \times A)$.
+  \begin{align*}
+    \pi_{12}^*(M) \wedge \pi_{13}^*(M) &= \pi_{12}^*(\bigvee_i M_i) \wedge \pi_{13}^*(\bigvee_i M_i)\\
+      &= \bigvee_i \pi_{12}^*(M_i) \wedge \bigvee_i \pi_{13}^*(M_i)\\
+      &= \bigvee_i \bigvee_j \pi_{12}^*(M_i) \wedge \pi_{13}^*(M_j)\\
+      &= \bigvee_i \pi_{12}^*(M_i) \wedge \pi_{13}^*(M_i)\\
+      &= \bigvee_i \delta\\
+      &= \delta
+  \end{align*}
+  Where we have made use of the fact that clearly
+  \[
+    \bigvee_i \pi_{12}^*(M_i) \wedge \pi_{13}^*(M_i) \le
+    \bigvee_i \bigvee_j \pi_{12}^*(M_i) \wedge \pi_{13}^*(M_j)
+  \]
+  but since $M_i$ forms a chain, supposing that $i \le j$ without loss
+  of generality, we then have that
+  \[
+    \pi_{12}^*(M_i) \wedge \pi_{13}^*(M_j) \le \pi_{12}^*(M_j) \wedge \pi_{13}^*(M_j)
+  \]
+  This means that the reverse inclusion holds. All told, this means
+  that we have indeed constructed an $M$ dominating the chain with a
+  partial section for $e$ as required. Thus, Zorn's lemma gives us a
+  maximal such subobject.
 
   Now suppose we have such a maximal subobject $m : M \mono B$ with a
   section $s : M \to A$. Let suppose that $M \neq A$, for it is then
