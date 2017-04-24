@@ -25,10 +25,10 @@ choice, the law of the excluded middle, and the existence of infinite
 sets in particular present challenges. The next set of definitions are
 the categorical analogs of these traits.
 \begin{defn}\label{defn:background:nno}
-  A natural number object (NNO) is a object $N \in \Ccat$ is an object
-  with arrows $s : N \to N$ and $z : 1 \to N$ so that for any object
-  $A \in \Ccat$ with $f : 1 \to A$ and $g : A \to A$, there exists a
-  unique $h$ so that
+  A natural number object (NNO) is an object $N \in \Ccat$ with arrows
+  $s : N \to N$ and $z : 1 \to N$ so that for any object $A \in \Ccat$
+  with $f : 1 \to A$ and $g : A \to A$, there exists a unique $h$ so
+  that
   \[
     \begin{tikzcd}
       1 \ar[r, "z"] \ar[dr, swap, "f"] & N \ar[d, dashed, "h"] \ar[r, "s"]& N \ar[d, dashed, "h"]\\
@@ -222,7 +222,33 @@ subobjects.
     \end{tikzcd}
   \]
 \end{defn}
+\begin{example}
+  $\Omega_j$ is a $j$-sheaf.
+\end{example}
+\begin{proof}
+  Suppose we have a dense map $m : A \mono B$ and
+  $f : A \to \Omega_j$, we wish to construct $g : B \to \Omega_j$ so
+  that $g \circ m = f$. However, a map into $\Omega_j$ composes with
+  $\iota : \Omega_j \mono \Omega$ to give a map
+  $\iota \circ f : A \to \Omega$ which must correspond to a subobject
+  $M \mono A$. Furthermore, since
+  $\charmap(\bar{M}) = j \circ j \circ f = \charmap(M)$. It must be that $M$
+  is closed. This in turn gives us a closed subobject $M \mono B$ by
+  simple composition. Therefore, we have a corresponding map
+  $\charmap_B(M)$ so that $\charmap_B(M) = j \circ \charmap_B(M)$. This implies
+  that $\charmap_B(M)$ must factor through $\Omega_j$ because $\Omega_j$
+  is the equalizer of $j$ and $1$.
 
+  Finally, we have the diagram
+  \[
+    \begin{tikzcd}
+      M \ar[d, rightarrowtail] \ar[rr, "!"] & & 1 \ar[dd, "\true"]\\
+      A \ar[d, rightarrowtail] \ar[dr, "f"] & & \\
+      B \ar[r] \ar[rr, swap, bend right, "\charmap_B(M)"] & \Omega_j \ar[r] & \Omega
+    \end{tikzcd}
+  \]
+  so it is clear that $\charmap_B(M)$ is the extension we were looking for.
+\end{proof}
 Sheaves enjoy several nice properties with regards to closure which
 will be useful for establishing some facts later on.
 \begin{lem}\label{lem:background:sheavesclosed}
