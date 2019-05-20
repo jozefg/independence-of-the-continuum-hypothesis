@@ -176,7 +176,7 @@ We can define an alternative subobject classifier which internalizes
 a Lawvere-Tierney topology as
 \[
   \begin{tikzcd}
-    \Omega_j \ar[r, dashed] &
+    \Omega_j \ar[r, "i", dashed] &
     \Omega \ar[r, shift left=0.5em, "1"]
     \ar[r, shift right=0.3em, swap, "j"] &
     \Omega
@@ -222,32 +222,45 @@ subobjects.
     \end{tikzcd}
   \]
 \end{defn}
+
+\begin{lem}\label{lem:background:denseclosediso}
+  For any dense monomorphism $m : A \mono B$. Pullback along $m$ induces an isomorphism between the
+  closed subobjects of $B$ and the closed subobjects of $A$: $\clsub(A) \cong \clsub(B)$.
+\end{lem}
+\begin{proof}
+  Suppose we have some closed subobject $U \mono B$. We know that
+  $\overline{m^{-1}(U)} = m^{-1}(\overline{U}) = m^{-1}(U)$ because closure is natural. Therefore,
+  $m^{-1}$ at least induces a map $\clsub(B) \to \clsub(A)$.
+
+  Next, let us consider $U \mapsto \overline{\exists_m U} : \clsub(A) \to \clsub(B)$. We will prove
+  that it is inverse to $m^{-1}$:
+  \[
+    m^{-1}(\overline{\exists_m U}) = \overline{m^{-1}(\exists_m U)} = \overline{U} = U
+  \]
+  This tells us that for any monomorphism that this is at least a partial inverse (recall that
+  $\exists_m$ is a simply post-composition with $m$ and therefore $m^{-1} \circ \exists_m = 1$ for
+  any monomorphism). For the reverse, suppose we have some closed $U \mono B$. Observe that
+  $\exists_m m^{-1}(U)$ is the image of $m^{-1}(U)$, which is equivalently phrased as $U \cap
+  A$. Therefore:
+  \[
+    \overline{\exists_m m^{-1}(V)} =
+    \overline{A \cap U} =
+    \overline{A} \cap \overline{U} =
+    B \cap U =
+    U \qedhere
+  \]
+\end{proof}
 \begin{lem}\label{lem:background:omegajsheaf}
   $\Omega_j$ is a $j$-sheaf.
 \end{lem}
 \begin{proof}
-  Suppose we have a dense map $m : A \mono B$ and
-  $f : A \to \Omega_j$, we wish to construct $g : B \to \Omega_j$ so
-  that $g \circ m = f$. However, a map into $\Omega_j$ composes with
-  $\iota : \Omega_j \mono \Omega$ to give a map
-  $\iota \circ f : A \to \Omega$ which must correspond to a subobject
-  $M \mono A$. Furthermore, since
-  $\charmap(\bar{M}) = j \circ j \circ f = \charmap(M)$. It must be that $M$
-  is closed. This in turn gives us a closed subobject $M \mono B$ by
-  simple composition. Therefore, we have a corresponding map
-  $\charmap_B(M)$ so that $\charmap_B(M) = j \circ \charmap_B(M)$. This implies
-  that $\charmap_B(M)$ must factor through $\Omega_j$ because $\Omega_j$
-  is the equalizer of $j$ and $1$.
-
-  Finally, we have the diagram
-  \[
-    \begin{tikzcd}
-      M \ar[d, rightarrowtail] \ar[rr, "!"] & & 1 \ar[dd, "\true"]\\
-      A \ar[d, rightarrowtail] \ar[dr, "f"] & & \\
-      B \ar[r] \ar[rr, swap, bend right, "\charmap_B(M)"] & \Omega_j \ar[r] & \Omega
-    \end{tikzcd}
-  \]
-  so it is clear that $\charmap_B(M)$ is the extension we were looking for.
+  Suppose we have a dense map $m : A \mono B$ and $f : A \to \Omega_j$, we wish to construct
+  $g : B \to \Omega_j$ so that $g \circ m = f$. We know that
+  $i \circ f : A \to \Omega_j \to \Omega$ corresponds to a closed subobject of $A$. We apply
+  Lemma~\ref{lem:background:denseclosediso} to construct a unique closed subobject,
+  $i \circ m' : B \to \Omega_j \to \Omega$ such that $i \circ m' \circ m = i \circ f$.
+  Now, since $i$ is a monomorphism (it is the equalizer) so $m' \circ m = f : A \to \Omega_j$.
+  We know that $m'$ is unique with this property so we are done.
 \end{proof}
 Sheaves enjoy several nice properties with regards to closure which
 will be useful for establishing some facts later on.
@@ -501,3 +514,8 @@ With this we are in a position to start our proof because a topos
 which satisfies the AoC and has a NNO is powerful enough to provide a
 model of ZFC that we will use to validate the independence of the
 continuum hypothesis.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
